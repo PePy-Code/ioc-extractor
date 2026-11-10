@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IOC Extractor</title>
+  <meta name="description" content="Client-side IOC extractor for IPv4, IPv6, domains, URLs, emails, hashes, CVEs and MITRE ATT&CK IDs. Defanged input supported. Nothing leaves your browser.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect width=%2216%22 height=%2216%22 fill=%22%23000%22/%3E%3Ctext x=%222%22 y=%2212%22 font-family=%22monospace%22 font-size=%2211%22 fill=%22%23f5f5f5%22%3E%3E_%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ioc.css">
+</head>
+<body>
+  <div class="app" id="ioc-app">
+    <header class="topbar">
+      <a class="back" href="https://pepy-code.github.io/">&larr; portfolio</a>
+      <span class="brand">~/ioc-extractor</span>
+      <span class="topbar__meta">client-side &middot; no upload &middot; no analytics</span>
+    </header>
+
+    <main>
+      <section class="hero">
+        <p class="eyebrow">// blue team utility</p>
+        <h1>IOC Extractor</h1>
+        <p class="lead">Paste logs, emails, or threat reports. Get deduplicated indicators: IPv4, IPv6, domains, URLs, emails, MD5/SHA1/SHA256, CVEs, and MITRE ATT&amp;CK technique IDs.</p>
+        <p class="privacy">100% client-side. Nothing you paste is sent anywhere. Defanged input such as <code>hxxp</code>, <code>[.]</code>, <code>[:]</code> and <code>[@]</code> is refanged before parsing.</p>
+      </section>
+
+      <section class="panel" aria-labelledby="input-title">
+        <div class="panel__head">
+          <label id="input-title" for="ioc-input">Input</label>
+          <div class="panel__actions">
+            <button class="btn" id="load-sample" type="button">load sample</button>
+            <button class="btn" id="clear-input" type="button">clear</button>
+          </div>
+        </div>
+
+        <textarea id="ioc-input" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Paste a firewall log, an email, a threat report, or a list of defanged indicators&hellip;"></textarea>
+
+        <div class="controls">
+          <label class="toggle" for="defang-toggle">
+            <input type="checkbox" id="defang-toggle">
+            <span>defang output</span>
+          </label>
+          <span class="hint">live &middot; debounced 180 ms</span>
+          <div class="exports">
+            <button class="btn" id="export-json" type="button" disabled>export json</button>
+            <button class="btn" id="export-csv" type="button" disabled>export csv</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="results" aria-labelledby="results-title">
+        <div class="results__head">
+          <h2 id="results-title">Results</h2>
+          <span id="ioc-total">0 unique indicators</span>
+        </div>
+        <p class="status" id="ioc-status" role="status" aria-live="polite">Waiting for input.</p>
+        <p class="empty" id="ioc-empty">No indicators found yet. Paste text above or load the sample.</p>
+        <div id="ioc-results"></div>
+      </section>
+
+      <noscript>
+        <p class="empty">This tool needs JavaScript to run. All parsing happens locally in your browser; nothing is uploaded.</p>
+      </noscript>
+
+      <footer class="footer">
+        <p>Built by Sa&uacute;l Bastidas (PePy-Code) &middot; static page &middot; no backend, no tracking.</p>
+      </footer>
+    </main>
+  </div>
+
+  <script src="ioc.js"></script>
+</body>
+</html>
